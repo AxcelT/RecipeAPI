@@ -41,14 +41,29 @@ This project is a Recipe API created as an assessment test for an internship. Th
 
 ## API Endpoints
 
+### Recipe Management
+
 - **POST /recipes/**: Add a new recipe.
 - **GET /recipes/**: Retrieve a list of all recipes, sorted by most recent.
 - **GET /recipes/{recipe_id}/**: Retrieve details of a specific recipe by its ID.
 - **PUT /recipes/{recipe_id}/**: Update a specific recipe by its ID.
 - **DELETE /recipes/{recipe_id}/**: Delete a specific recipe by its ID.
-- **POST /recipes/{recipe_id}/ratings/**: Rate a specific recipe.
-- **POST /recipes/{recipe_id}/comments/**: Comment on a specific recipe.
+
+### Rating and Commenting
+
+- **POST /recipes/{recipe_id}/ratings/**: Rate a specific recipe. Accepts a rating (1-5).
+- **POST /recipes/{recipe_id}/comments/**: Comment on a specific recipe. Accepts a comment text.
 - **GET /recipes/{recipe_id}/comments/**: Retrieve all comments for a specific recipe.
+
+### User Management
+
+- **POST /users/**: Create a new user. Accepts a username, email, and password.
+- **POST /token**: Obtain a JWT token for authentication. Accepts a username and password.
+
+### Search and Suggest
+
+- **GET /recipes/search/**: Search recipes by name or ingredients. Accepts a query parameter.
+- **GET /recipes/suggestions/**: Suggest recipes based on provided ingredients. Accepts a list of ingredients.
 
 ## Running Tests
 
