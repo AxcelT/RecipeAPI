@@ -37,7 +37,7 @@ This project is a Recipe API created as an assessment test for an internship. Th
     docker-compose up --build
     ```
 
-2. The API will be available at `http://localhost:8000/docs#/`.
+2. The API Documentation will be available at `http://localhost:8000/docs#/`.
 
 ## API Endpoints
 
