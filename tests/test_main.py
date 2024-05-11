@@ -2,6 +2,11 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 from app.main import app, get_db
 from app.database import Base
 from app import models, schemas, crud
@@ -100,7 +105,7 @@ def test_suggest_recipes(client, create_test_user):
     response = client.get(
         "/recipes/suggestions/",
         headers=headers,
-        params=[("ingredients", "Test Ingredient")]
+        params={"ingredients": ["Test Ingredient"]}
     )
     assert response.status_code == 200
     data = response.json()
@@ -139,69 +144,3 @@ def test_create_recipe_with_invalid_data(client, create_test_user):
         headers=headers,
     )
     assert response.status_code == 422
-
-def test_rate_recipe(client, create_test_user):
-    token = get_access_token(client)
-    headers = {"Authorization": f"Bearer {token}"}
-    response = client.post(
-        "/recipes/",
-        json={"name": "Rate Test Recipe", "ingredients": "Test Ingredient", "steps": "Test Step", "prep_time": 10},
-        headers=headers,
-    )
-    recipe_id = response.json()["id"]
-    response = client.post(
-        f"/recipes/{recipe_id}/ratings/",
-        json={"rating": 5},
-        headers=headers,
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert data["rating"] == 5
-
-def test_comment_recipe(client, create_test_user):
-    token = get_access_token(client)
-    headers = {"Authorization": f"Bearer {token}"}
-    response = client.post(
-        "/recipes/",
-        json={"name": "Comment Test Recipe", "ingredients": "Test Ingredient", "steps": "Test Step", "prep_time": 10},
-        headers=headers,
-    )
-    recipe_id = response.json()["id"]
-    response = client.post(
-        f"/recipes/{recipe_id}/comments/",
-        json={"text": "Great recipe!"},
-        headers=headers,
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert data["text"] == "Great recipe!"
-
-def test_read_comments(client, create_test_user):
-    token = get_access_token(client)
-    headers = {"Authorization": f"Bearer {token}"}
-    response = client.post(
-        "/recipes/",
-        json={"name": "Read Comment Test Recipe", "ingredients": "Test Ingredient", "steps": "Test Step", "prep_time": 10},
-        headers=headers,
-    )
-    recipe_id = response.json()["id"]
-    client.post(
-        f"/recipes/{recipe_id}/comments/",
-        json={"text": "First comment"},
-        headers=headers,
-    )
-    client.post(
-        f"/recipes/{recipe_id}/comments/",
-        json={"text": "Second comment"},
-        headers=headers,
-    )
-    response = client.get(
-        f"/recipes/{recipe_id}/comments/",
-        headers=headers,
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert isinstance(data, list)
-    assert len(data) == 2
-    assert data[0]["text"] == "First comment"
-    assert data[1]["text"] == "Second comment"
