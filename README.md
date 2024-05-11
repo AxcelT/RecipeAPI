@@ -66,4 +66,4 @@ This project is a Recipe API created as an assessment test for an internship. Th
 
 ## Contributors
 
-- Your Name (axcel_tidalgo@dlsu.edu.ph)
+- Axcel Justin D. Tidalgo (axcel_tidalgo@dlsu.edu.ph)
