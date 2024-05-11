@@ -20,7 +20,7 @@ This project is a Recipe API created as an assessment test for an internship. Th
 1. Clone the repository:
     ```sh
     git clone https://github.com/AxcelT/RecipeAPI.git
-    cd recipe-api
+    cd RecipeAPI
     ```
 
 2. Set up a virtual environment and install dependencies:
