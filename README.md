@@ -66,8 +66,4 @@ This project is a Recipe API created as an assessment test for an internship. Th
 
 ## Contributors
 
-- Your Name (your.email@example.com)
-
-## License
-
-This project is licensed under the MIT License.
+- Your Name (axcel_tidalgo@dlsu.edu.ph)
